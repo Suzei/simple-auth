@@ -1,0 +1,78 @@
+.box {
+    background-color: $white;
+    border-radius: $rounded-lm;
+
+    min-height: 500px;
+    max-width: 600px;
+
+    padding: 50px;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    align-self: center;
+    gap: 40px;
+    
+
+    button {
+        @extend .login-button;
+    }
+
+    text-align: center;
+
+   
+
+    header {
+        
+        padding: 0 60px;
+
+        h2 {
+            font-size: 1.375rem;
+        }
+        
+        span {
+            display: block;
+            font-size: 0.875rem;
+            width: 300px;
+            margin-top: 12px;
+        }
+    }
+    
+}
+
+.box form {
+    width: 100%;
+    section {
+        display: flex;
+        flex-grow: 1;
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        gap: 16px;
+
+        
+        div {
+            display: flex;
+            gap: 1rem;
+            flex: 1;
+        }        
+    }
+
+    button {
+        margin-top: 40px;
+    }
+
+    input {
+        border-radius: $rounded-sm;
+        border: 1px solid $grey-1;
+        padding: 15px;
+        width: 100%;
+        font-size: 1rem;
+
+        &::placeholder {
+            color: $grey-2;
+        }
+    }
+}

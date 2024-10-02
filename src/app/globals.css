@@ -1,0 +1,24 @@
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background: url('./assets/BG.svg') no-repeat center #F0E7DE;
+  height: 100vh;
+
+  font-family: var(--roboto);
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  
+  height: 100vh;
+  width: 100%;
+}
