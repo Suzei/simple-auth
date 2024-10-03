@@ -1,15 +1,16 @@
 "use server";
 
-import { ICreateUser } from "./interfaces/CreateUser";
-import { ILoginRequest } from "./interfaces/Login";
+import { ICreateUser } from "../../interfaces/CreateUser";
+import { ILoginRequest } from "../../interfaces/Login";
 import Pocketbase from "pocketbase";
-import { pbUrl } from "./lib/pBUrl";
+import { pbUrl } from "../../lib/pBUrl";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { ForgotPassword } from "@/app/components/ForgotPasswordForm";
 
 const pb = new Pocketbase(pbUrl);
 
-export async function CreateLogin(data: ICreateUser) {
+export async function CreateUser(data: ICreateUser) {
   try {
     await pb.collection("users").create(<ICreateUser>{ ...data });
   } catch (error) {
@@ -33,6 +34,7 @@ export async function CreateSession(data: ILoginRequest) {
       sameSite: "strict",
       httpOnly: true,
     });
+
     redirectPath = "/dashboard";
   } catch (error) {
     redirectPath = "/";
@@ -47,4 +49,10 @@ export async function CreateSession(data: ILoginRequest) {
 export async function Logout() {
   cookies().delete("pb_auth");
   redirect("/");
+}
+
+export async function CreatePasswordRecovery(email: string) {
+  const mailReset = await pb.collection("users").requestPasswordReset(email);
+
+  console.log(mailReset);
 }

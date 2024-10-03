@@ -4,9 +4,10 @@ import { z } from "zod";
 import { Box } from "../Box";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CreateLogin } from "@/app/actions";
 import Link from "next/link";
 import { Divider } from "../Divider";
+import { CreateUser } from "../../_server_components/(users)/userActions";
+import './styles.module.scss'
 
 const schema = z
     .object({
@@ -50,7 +51,7 @@ export function RegisterForm() {
 
     const onSubmit = (data: any) => {
         try {
-            CreateLogin(data)
+            CreateUser(data)
         } catch (error) {
             console.log(error)
         }
@@ -58,7 +59,7 @@ export function RegisterForm() {
 
     return (
         <Box boxType="form" authOption="createAccount">
-            <form onSubmit={handleSubmit(onSubmit)}>
+            < form onSubmit={handleSubmit(onSubmit)} >
                 <section>
                     <input
                         placeholder="Digite seu nome"
@@ -103,12 +104,12 @@ export function RegisterForm() {
                         ? "Criar minha conta"
                         : "Por favor, preencha os campos acima"}
                 </button>
-            </form>
+            </form >
 
             <footer>
                 <Divider text="Já possui conta?" />
                 <Link href="/">Faça seu login</Link>
             </footer>
-        </Box>
+        </Box >
     );
 }

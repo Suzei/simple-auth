@@ -19,6 +19,9 @@ export default function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+        <title>Pruu</title>
+      </head>
       <body className={`${robotoInit.variable} wrapper`}>
         <Image src={logo} alt="Logo do administrador" width={215} />
         <QueryClientProvider client={queryClient}>

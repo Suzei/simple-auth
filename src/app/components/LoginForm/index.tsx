@@ -4,14 +4,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+
 import Link from "next/link";
 import { Divider } from "../Divider";
 import { Box } from "../Box";
-import { redirect } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
-import Pocketbase from 'pocketbase'
-import { pbUrl } from "@/app/lib/pBUrl";
-import { CreateSession } from "@/app/actions";
+import { CreateSession } from "../../_server_components/(users)/userActions";
 
 const schema = z.object({
     email: z.string(),
@@ -22,7 +20,7 @@ type LoginSchema = z.infer<typeof schema>
 
 
 export function LoginForm() {
-    const { register, handleSubmit, formState: { errors } } = useForm<LoginSchema>({
+    const { register, handleSubmit, formState: { errors, disabled } } = useForm<LoginSchema>({
         resolver: zodResolver(schema),
     })
 
@@ -34,17 +32,20 @@ export function LoginForm() {
 
     const onSubmit = async (data: LoginSchema) => {
         mutation.mutate({ email: data.email, password: data.password })
-        console.log(data.email, data.password)
     }
+
+    const isLoading = mutation.isPending
+
 
     return (
         <Box boxType="form" authOption="auth">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <section>
                     <input placeholder="Digite seu e-mail" type="email" {...register('email')} />
+                    <Link className="link-text" href="/password-recover    ">Esqueceu sua senha?</Link>
                     <input placeholder="Sua senha" type="password" {...register('password')} />
                 </section>
-                <button disabled={mutation.isPending} type="submit">Fazer Login</button>
+                <button disabled={mutation.isPending || disabled} type="submit">Fazer login</button>
             </form>
 
             <footer>
