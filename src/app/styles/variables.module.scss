@@ -1,10 +1,10 @@
-$primary: #7562E9;
-$white: #FFFFFF;
-$button-login-primary: #FFCF86;
-$button-login-disabled: #FFCF8661;
+$primary: #7562e9;
+$white: #ffffff;
+$button-login-primary: #ffcf86;
+$button-login-disabled: #ffcf8661;
 
-$grey-1:#C4C4C4;
-$grey-2: #C0C0C0;
+$grey-1: #c4c4c4;
+$grey-2: #c0c0c0;
 
 $font-title: 1.375rem;
 $font-section: 1rem;
@@ -14,20 +14,26 @@ $rounded-sm: 10px;
 $rounded-lm: 40px;
 
 @mixin buttonColor($background, $color) {
-    background-color: $background;
-    color: $color;
+  background-color: $background;
+  color: $color;
 }
 
 .login-button {
-    border: none;
-    font-weight: 400;
-    border-radius: $rounded-sm;
-    width: 100%;
-    
-    padding: 12px 0;
-    cursor: pointer;
-    
-    &:disabled {
-        background-color: $button-login-disabled;
-    }
+  border: none;
+  font-weight: 400;
+  border-radius: $rounded-sm;
+  width: 100%;
+
+  padding: 12px 0;
+  cursor: pointer;
+
+  &:disabled {
+    background-color: $button-login-disabled;
+  }
+}
+
+.centralize-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

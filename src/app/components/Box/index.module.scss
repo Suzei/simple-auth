@@ -1,78 +1,82 @@
 .box {
-    background-color: $white;
-    border-radius: $rounded-lm;
+  background-color: $white;
+  border-radius: $rounded-lm;
 
-    min-height: 500px;
-    max-width: 600px;
+  @extend .centralize-column;
+  justify-content: flex-start;
+  align-self: center;
 
-    padding: 50px;
-    
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+  min-height: 500px;
+  max-width: 600px;
+  padding: 50px;
 
-    align-self: center;
+  text-align: center;
+
+  header {
+    padding: 0 60px;
+
+    h2 {
+      font-size: 1.375rem;
+    }
+
+    span {
+      font-size: 0.875rem;
+      width: 300px;
+      margin-top: 12px;
+    }
+  }
+
+  button {
+    @extend .login-button;
+  }
+
+  a {
+    @extend .login-button;
+    width: 200px;
+    border: 1px solid $grey-2;
+    font-size: 0.875rem;
+    color: black;
+
+    text-decoration: none;
+    font-weight: 700;
+  }
+
+  footer {
+    @extend .centralize-column;
+
+    margin-top: 40px;
     gap: 40px;
-    
-
-    button {
-        @extend .login-button;
-    }
-
-    text-align: center;
-
-   
-
-    header {
-        
-        padding: 0 60px;
-
-        h2 {
-            font-size: 1.375rem;
-        }
-        
-        span {
-            display: block;
-            font-size: 0.875rem;
-            width: 300px;
-            margin-top: 12px;
-        }
-    }
-    
+  }
 }
 
 .box form {
+  section {
+    display: flex;
+    flex-wrap: wrap;
+
     width: 100%;
-    section {
-        display: flex;
-        flex-grow: 1;
-        display: flex;
-        flex-wrap: wrap;
-        width: 100%;
-        gap: 16px;
+    gap: 16px;
 
-        
-        div {
-            display: flex;
-            gap: 1rem;
-            flex: 1;
-        }        
+    div {
+      display: flex;
+      gap: 1rem;
+      flex: 1;
     }
+  }
 
-    button {
-        margin-top: 40px;
+  button {
+    margin-top: 40px;
+  }
+
+  input {
+    border-radius: $rounded-sm;
+    border: 1px solid $grey-1;
+    padding: 15px;
+    width: 100%;
+    font-size: 1rem;
+
+    &::placeholder {
+      color: $grey-2;
     }
-
-    input {
-        border-radius: $rounded-sm;
-        border: 1px solid $grey-1;
-        padding: 15px;
-        width: 100%;
-        font-size: 1rem;
-
-        &::placeholder {
-            color: $grey-2;
-        }
-    }
+  }
 }

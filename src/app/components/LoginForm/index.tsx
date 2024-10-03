@@ -1,12 +1,17 @@
 "use client"
 
-import { useForm } from "react-hook-form";
-import { Box } from "../Box";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CreateLogin, CreateSession } from "@/app/actions";
-import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
+import Link from "next/link";
+import { Divider } from "../Divider";
+import { Box } from "../Box";
+import { redirect } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
+import Pocketbase from 'pocketbase'
+import { pbUrl } from "@/app/lib/pBUrl";
+import { CreateSession } from "@/app/actions";
 
 const schema = z.object({
     email: z.string(),
@@ -15,16 +20,22 @@ const schema = z.object({
 
 type LoginSchema = z.infer<typeof schema>
 
+
 export function LoginForm() {
+    const { register, handleSubmit, formState: { errors } } = useForm<LoginSchema>({
+        resolver: zodResolver(schema),
+    })
 
-    const { register, handleSubmit, formState: {
-        isValid, isDirty } } = useForm<LoginSchema>({
-            resolver: zodResolver(schema),
-        })
+    const mutation = useMutation({
+        mutationFn: async (data: LoginSchema) => {
+            await CreateSession({ email: data.email, password: data.password })
+        },
+    })
 
-
-    const onSubmit = (data?: LoginSchema) => { }
-
+    const onSubmit = async (data: LoginSchema) => {
+        mutation.mutate({ email: data.email, password: data.password })
+        console.log(data.email, data.password)
+    }
 
     return (
         <Box boxType="form" authOption="auth">
@@ -33,12 +44,13 @@ export function LoginForm() {
                     <input placeholder="Digite seu e-mail" type="email" {...register('email')} />
                     <input placeholder="Sua senha" type="password" {...register('password')} />
                 </section>
-
-                <button>{(!isDirty || isValid) ? 'Fazer login' : 'Por favor, preencha os campos acima'}</button>
+                <button disabled={mutation.isPending} type="submit">Fazer Login</button>
             </form>
 
-            <button onClick={() => onSubmit()}>Teste</button>
-            <button onClick={() => CreateSession({ email: 'silvaviniciusdev@gmail.com', password: '88499879a' })}></button>
+            <footer>
+                <Divider text="Não possui conta?" />
+                <Link href="/create-account">Criar uma conta</Link>
+            </footer>
         </Box>
     )
 }
