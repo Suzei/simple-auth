@@ -6,8 +6,9 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Divider } from "../Divider";
 import Link from "next/link";
-import { CreatePasswordRecovery } from "@/app/_server_components/(users)/userActions";
 import { useMutation } from "@tanstack/react-query";
+import { CreatePasswordRecovery } from "@/app/_server_components/(users)/passwordRecoveryActions";
+
 
 const schema = z.object({
     email: z.string().email("Não é um e-mail válido")
@@ -25,9 +26,11 @@ function ForgotPasswordForm() {
     });
 
     const mutation = useMutation({
-        mutationFn: async (recover: string) => {
-            return CreatePasswordRecovery(recover)
-        }
+        mutationFn: async (email: string) => {
+            return CreatePasswordRecovery({ email })
+        },
+
+        onError: () => { }
     })
 
     function onSubmit(data: ForgotPassword) {
@@ -39,7 +42,6 @@ function ForgotPasswordForm() {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <section>
                     <input {...register('email')} type="email" />
-                    {/* {errors.email && <span>{errors.email.message}</span>} */}
                 </section>
                 <button type="submit">Solicitar nova senha</button>
             </form>

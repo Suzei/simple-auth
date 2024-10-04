@@ -1,7 +1,7 @@
 "use server";
 
-import { ICreateUser } from "../../interfaces/CreateUser";
-import { ILoginRequest } from "../../interfaces/Login";
+import { ICreateUser } from "../../interfaces/ICreateUser";
+import { ILoginRequest } from "../../interfaces/ICreateSession";
 import Pocketbase from "pocketbase";
 import { pbUrl } from "../../lib/pBUrl";
 import { cookies } from "next/headers";
@@ -49,10 +49,4 @@ export async function CreateSession(data: ILoginRequest) {
 export async function Logout() {
   cookies().delete("pb_auth");
   redirect("/");
-}
-
-export async function CreatePasswordRecovery(email: string) {
-  const mailReset = await pb.collection("users").requestPasswordReset(email);
-
-  console.log(mailReset);
 }

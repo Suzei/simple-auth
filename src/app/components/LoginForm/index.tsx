@@ -34,18 +34,16 @@ export function LoginForm() {
         mutation.mutate({ email: data.email, password: data.password })
     }
 
-    const isLoading = mutation.isPending
-
 
     return (
         <Box boxType="form" authOption="auth">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <section>
                     <input placeholder="Digite seu e-mail" type="email" {...register('email')} />
-                    <Link className="link-text" href="/password-recover    ">Esqueceu sua senha?</Link>
+                    <Link className="link-text" href="/password-recover">Esqueceu sua senha?</Link>
                     <input placeholder="Sua senha" type="password" {...register('password')} />
                 </section>
-                <button disabled={mutation.isPending || disabled} type="submit">Fazer login</button>
+                <button disabled={mutation.isPending} type="submit">Fazer login</button>
             </form>
 
             <footer>
