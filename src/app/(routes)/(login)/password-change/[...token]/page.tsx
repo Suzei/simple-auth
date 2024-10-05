@@ -25,7 +25,7 @@ export default function PasswordChange() {
 
     const mutation = useMutation({
         mutationFn: (data: ConfirmPassword) => {
-            return ConfirmPasswordChange({ password: data.password, passwordConfirm: data.passwordConfirm, passwordResetToken: params.slug[0] })
+            return ConfirmPasswordChange({ password: data.password, passwordConfirm: data.passwordConfirm, passwordResetToken: params.token[0] })
 
         }
     })

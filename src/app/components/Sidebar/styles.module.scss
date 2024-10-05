@@ -1,0 +1,42 @@
+.sidebar {
+  background-color: $primary;
+
+  border-top-left-radius: $rounded-lm;
+  border-bottom-left-radius: $rounded-lm;
+  padding: 12px;
+
+  hr {
+    margin: 24px 0;
+    border-top: 1px dotted;
+    width: 42px;
+  }
+
+  nav {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    gap: 1.625rem;
+
+    button {
+      display: flex;
+      padding: 12px 26px;
+      width: 176px;
+      font-size: 16px;
+      border: 1px solid $white;
+      gap: 5px;
+      font-weight: 400;
+
+      background-color: transparent;
+      border-radius: $rounded-lm;
+
+      color: white;
+
+      align-items: center;
+
+      svg {
+        height: 22px;
+        width: 22px;
+      }
+    }
+  }
+}

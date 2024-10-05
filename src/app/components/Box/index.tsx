@@ -1,4 +1,4 @@
-import styles from "./index.module.scss";
+import styles from "./styles.module.scss";
 import { AuthType } from "@/app/types/AuthType";
 import { LoginText } from "@/app/utils/LoginDinamicText";
 

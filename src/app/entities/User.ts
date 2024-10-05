@@ -1,6 +1,6 @@
 import { UserTypes } from "../types/UserTypes";
 
-export interface ICreateUser {
+export interface User {
   username: string;
   email: string;
   emailVisibility: boolean;

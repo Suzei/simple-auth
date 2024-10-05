@@ -9,7 +9,6 @@ import Link from 'next/link';
 
 const robotoInit = Roboto({ subsets: ['latin'], weight: ['900', '400', '700'], variable: '--roboto' })
 
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -17,6 +16,7 @@ export default function RootLayout({
 }>) {
 
   const queryClient = new QueryClient()
+
 
   return (
     <html lang="en">

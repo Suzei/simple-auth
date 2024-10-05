@@ -7,7 +7,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { Divider } from "../Divider";
 import { CreateUser } from "../../_server_components/(users)/userActions";
-import './styles.module.scss'
 
 const schema = z
     .object({
@@ -44,7 +43,7 @@ export function RegisterForm() {
     const {
         register,
         handleSubmit,
-        formState: { isValid, isDirty, errors },
+        formState: { isDirty, errors },
     } = useForm<CreateUserSchema>({
         resolver: zodResolver(schema),
     });

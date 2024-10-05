@@ -1,26 +1,26 @@
 "use server";
 
-import { ICreateUser } from "../../interfaces/ICreateUser";
 import { ILoginRequest } from "../../interfaces/ICreateSession";
 import Pocketbase from "pocketbase";
 import { pbUrl } from "../../lib/pBUrl";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { ForgotPassword } from "@/app/components/ForgotPasswordForm";
+import { User } from "@/app/entities/User";
 
-const pb = new Pocketbase(pbUrl);
+export async function CreateUser(data: User) {
+  const pb = new Pocketbase(pbUrl);
 
-export async function CreateUser(data: ICreateUser) {
   try {
-    await pb.collection("users").create(<ICreateUser>{ ...data });
+    await pb.collection("users").create(<User>{ ...data });
   } catch (error) {
     console.log(error);
   }
 }
 
 export async function CreateSession(data: ILoginRequest) {
+  const pb = new Pocketbase(pbUrl);
+
   let redirectPath: string | null = null;
-  console.log("?");
   try {
     const { token, record: model } = await pb
       .collection("users")
@@ -34,11 +34,11 @@ export async function CreateSession(data: ILoginRequest) {
       sameSite: "strict",
       httpOnly: true,
     });
+    pb.authStore.save(token);
 
     redirectPath = "/dashboard";
   } catch (error) {
     redirectPath = "/";
-    console.log(error);
   } finally {
     if (redirectPath) {
       redirect(redirectPath);
