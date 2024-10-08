@@ -1,8 +1,9 @@
 /** @type {import('next').NextConfig} */
-"/src/app/styles/variables.module.scss";
+'/src/app/styles/variables.module.scss';
+
 const nextConfig = {
   sassOptions: {
-    includePaths: ["./src"],
+    includePaths: ['./src'],
     prependData: `@import "/src/app/styles/variables.module.scss";`,
   },
 };

@@ -1,1 +1,5 @@
-export type AuthType = "auth" | "createAccount" | "forgotPassword";
+export type AuthType =
+  | 'auth'
+  | 'createAccount'
+  | 'forgotPassword'
+  | 'dashboard';

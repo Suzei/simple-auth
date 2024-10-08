@@ -1,0 +1,53 @@
+.overlay {
+  background-color: rgba(1, 1, 1, 0.2);
+  position: fixed;
+  inset: 0;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  background-color: $white;
+  position: fixed;
+  max-width: 480px;
+  border-radius: 32px;
+  unset: 0;
+  gap: 24px;
+  padding: 32px;
+}
+
+.title {
+  margin: 0;
+  font-weight: 500;
+  color: var(--mauve-12);
+  font-size: 17px;
+}
+
+.description {
+  margin: 10px 0 20px;
+  color: var(--mauve-11);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  gap: 8px;
+
+  button {
+    @extend .login-button;
+    max-width: 100px;
+    border-radius: 100px;
+    background-color: red;
+    color: white;
+    padding: 8px 16px;
+
+    &:first-of-type {
+      border: 1px solid red;
+      color: red;
+      background-color: transparent;
+    }
+  }
+}

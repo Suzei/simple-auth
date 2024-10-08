@@ -11,10 +11,9 @@
 }
 
 .user {
+  display: flex;
+  background-color: blue;
+  justify-content: flex-end;
   padding: 16px 40px;
   border-bottom: 1px dotted $grey-3;
-}
-
-.table {
-  padding: 24px 40px;
 }

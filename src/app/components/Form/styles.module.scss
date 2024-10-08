@@ -1,0 +1,29 @@
+.dashboard {
+  width: 100%;
+  padding: 40px;
+
+  section {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 180px);
+    gap: 1rem;
+
+    input {
+      border-radius: 8px;
+      width: 100%;
+      padding: 0.5rem 1rem;
+    }
+  }
+
+  section {
+    div {
+      display: flex;
+      gap: 4px;
+      flex-direction: column;
+      width: 100%;
+
+      input {
+        grid-auto-flow: column;
+      }
+    }
+  }
+}

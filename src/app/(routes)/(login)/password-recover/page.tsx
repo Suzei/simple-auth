@@ -1,10 +1,23 @@
-import ForgotPasswordForm from "@/app/components/ForgotPasswordForm"
+'use client';
 
-function PasswordRecovery() {
-    return (
-        <ForgotPasswordForm />
-    )
+import { z } from 'zod';
+import { CreatePasswordRecovery } from '@/app/_server_components/(login)/passwordRecoveryActions';
+import { PasswordRecoveryInputs } from '@/app/utils/formInputs';
+import { Form } from '@/app/components/Form';
+
+const schema = z.object({
+  email: z.string().email('Não é um e-mail válido'),
+});
+
+function PasswordRecover() {
+  return (
+    <Form
+      schema={schema}
+      formMessages="forgotPassword"
+      inputs={PasswordRecoveryInputs}
+      onSubmitFunction={CreatePasswordRecovery}
+    />
+  );
 }
 
-
-export default PasswordRecovery
+export default PasswordRecover;
