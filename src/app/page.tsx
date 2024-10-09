@@ -53,8 +53,6 @@ export default function Home() {
     mode: 'onChange',
   });
 
-  console.log(errors);
-
   function onSubmit(data: loginSchema) {
     CreateSession(data);
   }

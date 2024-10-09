@@ -3,8 +3,6 @@
 import {
   CreateCategory,
   GetCategories,
-  GetCategoryById,
-  UpdateCategory,
 } from '@/app/_server_components/(dashboard)/categories/action';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
@@ -16,6 +14,7 @@ import {
   GetCourseById,
   UpdateCourse,
 } from '@/app/_server_components/(dashboard)/(courses)/action';
+import { Switch } from '@radix-ui/react-switch';
 
 const schema = z.object({
   description: z.string(),

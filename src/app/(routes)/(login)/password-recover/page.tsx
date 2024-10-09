@@ -23,7 +23,6 @@ async function PasswordRecover() {
   });
 
   async function onSubmit(data: forgotPasswordSchema) {
-    console.log(data);
     await CreatePasswordRecovery({ email: data.email });
   }
   return (
