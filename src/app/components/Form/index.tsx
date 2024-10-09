@@ -7,6 +7,10 @@ import { HTMLInputTypeAttribute } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AuthType } from '@/app/types/AuthType';
 import styles from './styles.module.scss';
+import { useParams, useRouter } from 'next/navigation';
+import Image from 'next/image';
+import Loading from '../../assets/loading.webp';
+import * as Switch from '@radix-ui/react-switch';
 
 export interface FormInputs {
   type?: HTMLInputTypeAttribute;
@@ -19,6 +23,8 @@ export interface FormInputs {
 interface FormProps {
   onSubmitFunction(data: any): void;
   updateValues?: (id: string, data: any) => void;
+  getIdValues?: (id: string) => void;
+  populateSelect?: () => void;
   schema: any;
   formType: AuthType;
   inputs: FormInputs[];
@@ -28,24 +34,45 @@ export function Form({
   inputs,
   onSubmitFunction,
   schema,
+  populateSelect,
+  getIdValues,
   formType,
 }: FormProps) {
   const {
     handleSubmit,
     register,
-    formState: { errors, isDirty, isValid },
+    formState: { errors, isSubmitting },
   } = useForm({ resolver: zodResolver(schema) });
+
+  const params = useParams();
+  const route = useRouter();
 
   const mutation = useMutation({
     mutationFn: async (data: FormData) => {
-      await onSubmitFunction(data);
+      onSubmitFunction(data);
+    },
+
+    onSuccess: () => {
+      if (formType === 'dashboard') {
+        route.back();
+      }
     },
   });
 
   function onSubmit(data?: FormData | any) {
+    console.log('data', data);
     mutation.mutate(data);
-    console.log(data);
   }
+
+  const selectQuery = useQuery({
+    queryKey: ['select'],
+    queryFn: async () => populateSelect(),
+  });
+
+  const valueQuery = useQuery({
+    queryKey: ['idOnValues'],
+    queryFn: () => getIdValues(params.id),
+  });
 
   return (
     <>
@@ -58,21 +85,32 @@ export function Form({
                   <label htmlFor={item.register}>{item.label}</label>
                   {item.type === 'select' || item.select ? (
                     <select {...register(item.register)}>
-                      <option value="">Selecionar</option>
-                      {item.select?.map((opts) => (
-                        <option value={opts.value}>{opts.label}</option>
+                      {selectQuery.data?.items?.map((opt) => (
+                        <option value={opt.type}>{opt.name}</option>
                       ))}
                     </select>
                   ) : (
-                    <input {...register(item.register)} type={item.type} />
+                    <>
+                      {item.type === 'checkbox' ? (
+                        <Switch.Root
+                          className={styles.Root}
+                          {...register(item.register)}
+                        >
+                          <Switch.SwitchThumb className={styles.Thumb} />
+                        </Switch.Root>
+                      ) : (
+                        <input {...register(item.register)} type={item.type} />
+                      )}
+                    </>
                   )}
                 </div>
               </>
             ))}
           </section>
-          <button type="submit">
-            {mutation.isPending ? 'Carregando' : 'Enviar'}
-          </button>
+          <div className={styles.controller}>
+            <button type="button">Cancelar</button>
+            <button type="submit">Criar</button>
+          </div>
         </form>
       ) : (
         <Box authOption={formType}>
@@ -85,14 +123,18 @@ export function Form({
                     {...register(input.register)}
                     placeholder={input.placeholder}
                   />
-                  {errors.root?.message}
-
-                  {}
+                  {errors.root?.type?.valueOf}
                 </>
               ))}
             </section>
-            <button disabled={!isValid || !isDirty} type="submit">
-              {mutation.isPending ? 'Carregando' : 'any shut'}
+            <button disabled={isSubmitting} type="submit">
+              {mutation.isPending ? (
+                <>
+                  <Image src={Loading} alt="Carregando" width={20} /> Carregando
+                </>
+              ) : (
+                `Por favor, preencha os campos acima`
+              )}
             </button>
           </form>
         </Box>

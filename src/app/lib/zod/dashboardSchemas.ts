@@ -14,6 +14,7 @@ export const categoriesSchema = z.object({
 
 export const courseSchema = z.object({
   name: z.string().min(8, 'Este espaço deve conter ao menos 8 caractéres.'),
+  description: z.string().min(8, ''),
   category: z.string(),
   objetives: z
     .string()

@@ -1,11 +1,11 @@
-import { IPasswordConfirmChange } from "@/app/interfaces/IPasswordChange";
-import { pbUrl } from "@/app/lib/pBUrl";
-import Pocketbase from "pocketbase";
+import { IPasswordConfirmChange } from '@/app/interfaces/IPasswordChange';
+import { pbUrl } from '@/app/lib/pBUrl';
+import Pocketbase from 'pocketbase';
 
 export async function CreatePasswordRecovery({ email }: { email: string }) {
   const pb = new Pocketbase(pbUrl);
 
-  await pb.collection("users").requestPasswordReset(email);
+  await pb.collection('users').requestPasswordReset(email);
 }
 
 export async function ConfirmPasswordChange({
@@ -16,6 +16,6 @@ export async function ConfirmPasswordChange({
   const pb = new Pocketbase(pbUrl);
 
   await pb
-    .collection("users")
+    .collection('users')
     .confirmPasswordReset(passwordResetToken, password, passwordConfirm);
 }

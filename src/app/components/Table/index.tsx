@@ -9,10 +9,11 @@ import Loading from '@/app/loading';
 import Link from 'next/link';
 import { Navigation } from '@/app/types/NavigationType';
 import { navigationsKeys } from '@/app/utils/navigationPatterns';
-import { TableColumns } from '@/app/interfaces/ITableColumns';
+import { pbUrl } from '@/app/lib/pBUrl';
+import Pocketbase from 'pocketbase';
 
 interface TableProps {
-  deleteAction?: (id: string) => void;
+  deleteAction: (id: string) => void;
   populateTable: () => void;
   navigationTo: Navigation;
 }
@@ -28,23 +29,28 @@ export function Table({
   });
 
   const [open, setOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<any>({});
+  const [selectedOption, setSelectedOption] = useState<any>();
+
+  const pb = new Pocketbase(pbUrl);
 
   function OpenModal(id: string) {
     setSelectedOption(id);
     setOpen(!open);
   }
 
-  const mutation = useMutation({
+  const deleteRow = useMutation({
     mutationFn: async () => {
-      console.log('????');
-      deleteAction(selectedOption.id);
+      if (selectedOption) {
+        deleteAction(selectedOption);
+      }
     },
 
     onSuccess: () => {
       setOpen(false);
     },
   });
+
+  const user = pb.authStore.model;
 
   return (
     <div className={styles.tableWrapper}>
@@ -63,18 +69,42 @@ export function Table({
           </div>
           <table className={styles.tableDefault}>
             <thead>
-              <tr>
-                <th>{query.data?.items[0]}</th>
-              </tr>
+              {navigationTo === 'categories' && (
+                <>
+                  <th>Nome</th>
+                  <th>Descrição</th>
+                  <th>Ações</th>
+                </>
+              )}
+
+              {navigationTo === 'users' && (
+                <>
+                  <th>Nome</th>
+                  <th>E-mail</th>
+                  <th>Ações</th>
+                </>
+              )}
+
+              {navigationTo === 'courses' && (
+                <>
+                  <th>Nome</th>
+                  <th>Descrição</th>
+                  <th>Publicado</th>
+                  <th>Ações</th>
+                </>
+              )}
             </thead>
 
             <tbody>
               {query.data?.items?.map((item: any) => (
                 <tr>
-                  {item.name && <td>{item.name}</td>}{' '}
-                  {item.email && <td>{item.email}</td>}{' '}
+                  {item.name && <td>{item.name}</td>}
+                  {item.email && <td>{item.email}</td>}
+                  {item.description && (
+                    <td className={styles.description}>{item.description}</td>
+                  )}
                   {item.category && <td>{item.category_mother}</td>}
-                  {item.isPublished && <td>{item.isPublished}</td>}
+                  {item.published && <td>{item.published ? 'Sim' : 'Não'}</td>}
                   <td>
                     <Link href={`${navigationTo}/${item.id}`}>
                       <RiEdit2Fill color="#0088FF" />
@@ -88,7 +118,7 @@ export function Table({
             </tbody>
           </table>
           <Modal
-            confirmationFunction={mutation.mutate}
+            confirmationFunction={deleteRow.mutate}
             description="Esta ação não pode ser desfeita. Ao prosseguir, o item será permanentemente excluído do sistema."
             title="Tem certeza que deseja deletar?"
             isModalOpen={open}

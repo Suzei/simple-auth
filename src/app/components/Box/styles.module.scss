@@ -6,7 +6,6 @@
   justify-content: center;
   align-self: center;
 
-  min-height: 410px;
   max-width: 600px;
   padding: 50px;
 
@@ -29,7 +28,12 @@
   }
 
   button {
+    width: 100%;
     @extend .login-button;
+    @include buttonColor($button-login-primary, black);
+    &:disabled {
+      @include buttonColor($button-login-disabled, black);
+    }
   }
 
   footer {
@@ -48,6 +52,17 @@
 }
 
 .box form {
+  input {
+    border-radius: $rounded-sm;
+    border: 1px solid $grey-1;
+    padding: 15px;
+    width: 100%;
+    font-size: 1rem;
+
+    &::placeholder {
+      color: $grey-2;
+    }
+  }
   section {
     display: flex;
     flex-wrap: wrap;
@@ -70,17 +85,6 @@
 
   button {
     margin-top: 40px;
-  }
-
-  input {
-    border-radius: $rounded-sm;
-    border: 1px solid $grey-1;
-    padding: 15px;
     width: 100%;
-    font-size: 1rem;
-
-    &::placeholder {
-      color: $grey-2;
-    }
   }
 }

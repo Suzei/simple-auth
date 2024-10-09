@@ -1,7 +1,7 @@
 export interface Courses {
   name: string;
   category: string;
-  objetives: string;
+  objetive: string;
   description: string;
   published: boolean;
 }

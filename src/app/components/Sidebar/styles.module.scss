@@ -22,9 +22,13 @@
       padding: 12px 26px;
       width: 176px;
       font-size: 16px;
-      border: 1px solid $white;
       gap: 5px;
       font-weight: 400;
+      opacity: 1;
+
+      &:disabled {
+        opacity: 0.2;
+      }
 
       background-color: transparent;
       border-radius: $rounded-lm;
@@ -39,4 +43,10 @@
       }
     }
   }
+}
+
+.isActive {
+  border: 1px solid $white;
+  color: white;
+  opacity: 2;
 }

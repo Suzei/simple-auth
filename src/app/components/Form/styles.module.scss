@@ -1,16 +1,33 @@
 .dashboard {
   width: 100%;
-  padding: 40px;
+
+  input[name='objective'],
+  input[name='description'] {
+    padding: 1rem;
+  }
 
   section {
     display: grid;
-    grid-template-columns: repeat(auto-fill, 180px);
-    gap: 1rem;
+    grid-template-columns: 1fr 200px auto;
+    gap: 24px 1rem;
 
-    input {
+    label {
+      font-size: 0.875rem;
+    }
+
+    input,
+    select {
+      &:focus {
+        border: 2px solid #7562e940;
+      }
+
+      align-self: stretch;
+
       border-radius: 8px;
       width: 100%;
       padding: 0.5rem 1rem;
+      border: 1px solid #ecebf0;
+      outline: none;
     }
   }
 
@@ -25,5 +42,51 @@
         grid-auto-flow: column;
       }
     }
+  }
+}
+
+.controller {
+  display: flex;
+  gap: 8px;
+  margin-top: 24px;
+
+  button {
+    border-radius: 100px;
+    border: 1px solid #ecebf0;
+    padding: 4px 18px;
+    color: $primary;
+
+    &:nth-child(2) {
+      background-color: $primary;
+      color: $white;
+    }
+  }
+}
+
+.Root {
+  all: unset;
+  width: 42px;
+  height: 25px;
+  background-color: black;
+  border-radius: 9999px;
+  position: relative;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+  &[data-state='checked'] {
+    background-color: #51e051;
+  }
+}
+
+.Thumb {
+  display: block;
+  width: 21px;
+  height: 21px;
+  background-color: white;
+  border-radius: 9999px;
+  transition: transform 100ms;
+  transform: translateX(2px);
+  will-change: transform;
+  &[data-state='checked'] {
+    transform: translateX(19px);
   }
 }

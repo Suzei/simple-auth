@@ -1,22 +1,40 @@
 'use client';
 
 import { z } from 'zod';
+import { Box } from '@/app/components/Box';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { CreatePasswordRecovery } from '@/app/_server_components/(login)/passwordRecoveryActions';
-import { PasswordRecoveryInputs } from '@/app/utils/formInputs';
-import { Form } from '@/app/components/Form';
 
 const schema = z.object({
   email: z.string().email('Não é um e-mail válido'),
 });
 
-function PasswordRecover() {
+type forgotPasswordSchema = z.infer<typeof schema>;
+
+async function PasswordRecover() {
+  const {
+    register,
+    handleSubmit,
+    formState: { isDirty, isValid, isSubmitting, errors },
+  } = useForm<forgotPasswordSchema>({
+    resolver: zodResolver(schema),
+    mode: 'onChange',
+  });
+
+  async function onSubmit(data: forgotPasswordSchema) {
+    console.log(data);
+    await CreatePasswordRecovery({ email: data.email });
+  }
   return (
-    <Form
-      schema={schema}
-      formMessages="forgotPassword"
-      inputs={PasswordRecoveryInputs}
-      onSubmitFunction={CreatePasswordRecovery}
-    />
+    <Box authOption="forgotPassword">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <input placeholder="Seu e-mail" type="text" {...register('email')} />
+      </form>
+      <button type="submit" disabled={!isDirty || !isValid}>
+        Solicitar nova senha
+      </button>
+    </Box>
   );
 }
 

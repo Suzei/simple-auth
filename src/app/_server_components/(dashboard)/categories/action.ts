@@ -5,11 +5,11 @@ import Pocketbase from 'pocketbase';
 const pb = new Pocketbase(pbUrl);
 
 export async function CreateCategory(data: Categories) {
-  await pb.collection('categories').create(data);
+  await pb.collection('categories').create({ ...data });
 }
 
 export async function GetCategories() {
-  const categories = pb.collection('categories').getList(1, 10);
+  const categories = await pb.collection('categories').getList(1, 5);
 
   return categories;
 }

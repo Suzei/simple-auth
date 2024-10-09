@@ -16,19 +16,19 @@ export async function GetUserByCookie() {
 }
 
 export async function GetUserList() {
-  const users = await pb.collection('users').getList(1, 10, {
-    sort: '-updated',
+  const users = await pb.collection('users').getList(1, 5, {
     requestKey: null,
   });
 
   return users;
 }
 
-export async function GetUserByID(id: string) {
-  const user = await pb.collection('users').getOne(id);
-  console.log(user);
-
-  return user;
+export async function GetUserById({ id }: { id: string }) {
+  try {
+    const user = await pb.collection('users').getOne(id);
+  } catch (error) {
+    throw new error();
+  }
 }
 
 export async function GetUserType() {

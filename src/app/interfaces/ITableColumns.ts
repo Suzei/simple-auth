@@ -3,5 +3,5 @@ export interface TableColumns {
   name?: string;
   email?: string;
   category?: string;
-  isPublished?: string;
+  published?: string;
 }
