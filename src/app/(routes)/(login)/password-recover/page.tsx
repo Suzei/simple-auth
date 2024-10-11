@@ -19,7 +19,6 @@ async function PasswordRecover() {
     formState: { isDirty, isValid, isSubmitting, errors },
   } = useForm<forgotPasswordSchema>({
     resolver: zodResolver(schema),
-    mode: 'onChange',
   });
 
   async function onSubmit(data: forgotPasswordSchema) {
