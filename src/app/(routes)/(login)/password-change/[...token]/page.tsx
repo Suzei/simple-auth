@@ -13,6 +13,8 @@ const schema = z.object({
 export default function PasswordChange() {
   const params = useParams();
 
+  console.log('token')
+
   return (
     <Form
       schema={schema}
